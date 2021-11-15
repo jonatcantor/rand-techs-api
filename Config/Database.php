@@ -16,8 +16,13 @@ class Database {
     }
 
     public function connect() {
+        $options = [
+            PDO::MYSQL_ATTR_SSL_CA => '/etc/pki/tls/certs/ca-bundle.crt',
+            PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => false
+        ];
+
         try {
-            $this->connection = new PDO("mysql:host=$this->host; port=$this->db_port; dbname=$this->db_name; sslmode=VERIFY_IDENTITY; sslcert=/etc/pki/tls/certs/ca-bundle.crt; charset=utf8", $this->username, $this->password);
+            $this->connection = new PDO("mysql:host=$this->host; port=$this->db_port; dbname=$this->db_name; charset=utf8", $this->username, $this->password, $options);
             $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $this->connection->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
