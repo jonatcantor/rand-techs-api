@@ -17,7 +17,6 @@ class Database {
 
     public function connect() {
         $options = [
-            PDO::MYSQL_ATTR_SSL_CA => '/etc/pki/tls/certs/ca-bundle.crt',
             PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => false
         ];
 
