@@ -8,7 +8,7 @@ if(!isset($_ENV['APP_PRODUCTION'])) {
 require_once(__DIR__ . '/../Config/Database.php');
 require_once(__DIR__ . '/../Models/Technology.php');
 
-// header('Content-Type: application/json');
+header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: ' . $_ENV['APP_ORIGIN']);
 header('Access-Control-Allow-Methods: GET');
 
