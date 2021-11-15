@@ -1,1 +1,1 @@
-A simple GET API for the rand techs app web
+A simple GET API for the rand techs app web.
