@@ -31,41 +31,44 @@ if(count($commandSplit) != 2) {
 }
 
 if($commandSplit[0] == 'rand') {
-  define ('COMMANDS', [
-    'fron' => 'Frontend',
-    'back' => 'Backend',
-    'full' => 'FullStack'
-  ]);
-
-  if(!array_key_exists($commandSplit[1], COMMANDS)) {
-    echo json_encode(['error' => 'error: command not found']);
-  }
-
-  else if($commandSplit[1] == 'full') {
+  if($commandSplit[1] == 'full') {
     $techElements = $technology->getFullRandom();
-    echo json_encode(['fron' => $techElements[0]->fetchAll(), 'back' => $techElements[1]->fetchAll()]);
+    $fronElements = $techElements[0]->fetchAll();
+    $backElements = $techElements[1]->fetchAll();
+
+    if(!empty($fronElements) && !empty($backElements)) {
+      echo json_encode(['fron' => $fronElements, 'back' => $backElements]);
+    }
+
+    else {
+      echo json_encode(['error' => 'error: command not found']);
+    }
   }
 
   else {
-    $techElements = $technology->getRandom(COMMANDS[$commandSplit[1]]);
-    echo json_encode([$commandSplit[1] => $techElements->fetchAll()]);
+    $techElements = $technology->getRandom($commandSplit[1])->fetchAll();
+
+    if(!empty($techElements)) {
+      echo json_encode([$commandSplit[1] => $techElements]);
+    }
+
+    else {
+      echo json_encode(['error' => 'error: command not found']);
+    }
   }
 
   return;
 }
 
 if($commandSplit[0] == 'ecos') {
-  define ('COMMANDS', [
-    'react' => 'React'
-  ]);
+  $techElements = $technology->getEcosystem($commandSplit[1])->fetchAll();
 
-  if(!array_key_exists($commandSplit[1], COMMANDS)) {
-    echo json_encode(['error' => 'error: command not found']);
+  if(!empty($techElements)) { 
+    echo json_encode([$commandSplit[1] => $techElements]);
   }
 
   else {
-    $techElements = $technology->getEcosystem($commandSplit[1]);
-    echo json_encode(['ecos' => $techElements->fetchAll()]);
+    echo json_encode(['error' => 'error: command not found']);
   }
 
   return;
