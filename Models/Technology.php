@@ -17,7 +17,7 @@ class Technology {
     $query_branch = "SELECT T.type AS type_name FROM $this->table AS TECH
                       INNER JOIN Branches AS B ON TECH.id_branches = B.id
                       INNER JOIN Types AS T ON TECH.id_types = T.id
-                      WHERE B.branch = :branch
+                      WHERE B.command = :branch
                       ORDER BY RAND()
                       LIMIT 1";
       
@@ -25,26 +25,27 @@ class Technology {
     $stmt_branch->bindParam(':branch', $branch, PDO::PARAM_STR);
     $stmt_branch->execute();
 
-    $type_name = $stmt_branch->fetch()['type_name'];
+    $type_name = $stmt_branch->fetch();
+    $type_name = !empty($type_name) ? $type_name['type_name'] : '';
 
     $query;
     $where;
 
     if($type_name == 'Base' || $type_name == 'Preprocessor') {
       $where = 'WHERE T.type = :type_name
-                AND B.branch = :branch';
+                AND B.command = :branch';
     }
 
     else if($type_name == 'Dependence') {
       $where = 'WHERE (T.type = :type_name
-                AND B.branch = :branch)
-                OR (B.branch = :branch
+                AND B.command = :branch)
+                OR (B.command = :branch
                 AND E.ecosystem = TECH.name)';
     }
 
     else {
       $where = 'WHERE T.type = :type_name
-                AND B.branch = :branch
+                AND B.command = :branch
                 ORDER BY RAND()
                 LIMIT 1';
     }
@@ -65,8 +66,8 @@ class Technology {
 
   public function getFullRandom() {
     $fullRandom = [
-      $this->getRandom('Frontend'),
-      $this->getRandom('Backend')
+      $this->getRandom('fron'),
+      $this->getRandom('back')
     ];
 
     return $fullRandom;
@@ -75,7 +76,7 @@ class Technology {
   public function getEcosystem($ecos) {
     $query = "SELECT TECH.name, TECH.link, E.ecosystem AS ecosystem FROM $this->table AS TECH
               INNER JOIN Ecosystems AS E ON TECH.id_ecosystems = E.id
-              WHERE E.ecosystem = :ecos";
+              WHERE E.command = :ecos";
 
     $stmt = $this->connection->prepare($query);
     $stmt->bindParam(':ecos', $ecos, PDO::PARAM_STR);
