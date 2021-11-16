@@ -69,7 +69,7 @@ if($commandSplit[0] == 'ecos') {
   $techElements = $technology->getEcosystem($commandSplit[1])->fetchAll();
 
   if(!empty($techElements)) { 
-    echo json_encode([$commandSplit[1] => $techElements]);
+    echo json_encode(['ecos' => $techElements]);
   }
 
   else {
