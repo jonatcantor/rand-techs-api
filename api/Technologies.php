@@ -30,6 +30,11 @@ if(count($commandSplit) != 2) {
   return;
 }
 
+if(preg_match('/^[A-Z].*$/', $commandSplit[0]) || preg_match('/^[A-Z].*$/', $commandSplit[1])) {
+  echo json_encode(['error' => 'error: command not found']);
+  return;
+}
+
 if($commandSplit[0] == 'rand') {
   if($commandSplit[1] == 'full') {
     $techElements = $technology->getFullRandom();
