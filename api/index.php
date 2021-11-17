@@ -18,7 +18,7 @@ $routes = [
 ];
 
 try {
-  if(!$routes[$route] || !file_exists(__DIR__ . $routes[$route])) {
+  if(!isset($routes[$route]) || !file_exists(__DIR__ . $routes[$route])) {
     throw new Exception ('error: endpoint not found');
   }
 
