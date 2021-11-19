@@ -12,6 +12,13 @@ header('Access-Control-Allow-Methods: GET');
 $url = parse_url(htmlspecialchars($_SERVER['REQUEST_URI']));
 $route = substr($url['path'], 1);
 
+// if you use apache use:
+// if you don't use apache then you use: php -S localhost:8000 index.php and comment the below if code:
+if(!isset($_ENV['APP_PRODUCTION'])) {
+  $route = explode('/', $route)[2];
+}
+// --------------------------------------------
+
 $routes = [
   'Technologies' => '/Technologies.php',
   'Ecosystems' => '/Ecosystems.php'
