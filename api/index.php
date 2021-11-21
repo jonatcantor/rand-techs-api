@@ -38,6 +38,7 @@ try {
     require_once(__DIR__ . $routes[$route]);
   }
 } catch(Exception $e) {
+  http_response_code(404);
   echo json_encode(['error' => $e->getMessage()]);
 }
 ?>
