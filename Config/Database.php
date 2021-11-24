@@ -30,7 +30,8 @@ class Database {
       $this->connection->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
     } catch(PDOException $e) {
-      echo 'Connection error: ' . $e->getMessage();
+      http_response_code(500);
+      echo json_encode(['error' => 'Connection error: ' . $e->getMessage()]);
     }
     
     return $this->connection;

@@ -37,10 +37,10 @@ class Technology {
     }
 
     else if($type_name == 'Dependence') {
-      $where = 'WHERE (T.type = :type_name
-                AND B.command = :branch)
-                OR (B.command = :branch
-                AND E.ecosystem = TECH.name)';
+      $where = 'WHERE T.type = :type_name
+                AND B.command = :branch
+                ORDER BY RAND()
+                LIMIT 1';
     }
 
     else {
